@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:student_tracking_portal/login/provider/login_provider.dart';
 import 'package:student_tracking_portal/product_admin_screens/providers/customer_provider.dart';
+import 'package:student_tracking_portal/provider/customer_admin_provider.dart';
 import 'core/constants/color_constants.dart';
 import 'customer_admin_screens/home_screen/customer_admin_home.dart';
 import 'provider/user_provider.dart';
@@ -60,6 +61,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => LoginProvider(),
+        ),
+         ChangeNotifierProvider(
+          create: (context) => CustomerAdminProvider(),
         ),
       ],
       child: MaterialApp(

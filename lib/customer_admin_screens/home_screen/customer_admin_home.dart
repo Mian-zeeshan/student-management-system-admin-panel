@@ -15,6 +15,7 @@ import '../component/customer_admin_side_menu.dart';
 class CustomerAdminHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: Color(0xffF0F1F3),
       //key: context.read<MenuController>().scaffoldKey,
@@ -38,7 +39,7 @@ class CustomerAdminHomeScreen extends StatelessWidget {
               builder: (context, value, child) {
                 return Expanded(
                   flex: 5,
-                  child: AppConfig.customerAdminPagesList[0],
+                  child: AppConfig.customerAdminPagesList[value.pageIndex],
                 );
               },
             ),
