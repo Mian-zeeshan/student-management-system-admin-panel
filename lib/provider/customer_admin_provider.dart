@@ -56,11 +56,11 @@ class CustomerAdminProvider with ChangeNotifier {
     notifyListeners();
   }
 
-   String? _studentId;
-  String? get studentId => _studentId;
+   String? _UserUUId;
+  String? get UserUUId => _UserUUId;
 
-  void setStudentId(value) {
-    _studentId = value;
+  void setUserUUId(value) {
+    _UserUUId = value;
 
     notifyListeners();
   }

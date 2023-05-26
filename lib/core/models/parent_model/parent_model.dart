@@ -6,6 +6,7 @@ class ParentModel {
   String? cnicNo;
   String? childId;
   String? email;
+  String? genderId;
   String? password;
   String? createdAt;
   String? createdBy;
@@ -18,6 +19,7 @@ class ParentModel {
     this.cnicNo,
     this.childId,
     this.email,
+    this.genderId,
     this.password,
     this.createdAt,
     this.createdBy,
@@ -32,6 +34,7 @@ class ParentModel {
       cnicNo: json['cnicNo'],
       childId: json['childId'],
       email: json['email'],
+      genderId: json['genderId'],
       password: json['password'],
       createdAt: json['createdAt'],
       createdBy: json['createdBy'],
@@ -47,6 +50,7 @@ class ParentModel {
       'cnicNo': cnicNo,
       'childId': childId,
       'email': email,
+      'genderId': genderId,
       'password': password,
       'createdAt': createdAt,
       'createdBy': createdBy,

@@ -26,8 +26,7 @@ class CustomerAdminSideMenue extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Image.asset('asset/images/logo.png'),
-                   Image.asset('asset/images/menue.png')],
+                  children: [Image.asset('asset/images/logo.png'), Image.asset('asset/images/menue.png')],
                 ),
               ),
             ),
@@ -138,10 +137,31 @@ class CustomerAdminSideMenue extends StatelessWidget {
               thickness: 2,
               color: Color(0xff131F73),
             ),
-            DrawerListTile(
-              title: "Subject",
-              svgSrc: "asset/images/subject.png",
-              press: () {},
+            ExpansionTile(
+              title: const Text(
+                "Subject",
+                style: TextStyle(color: Color(0xffFFFFFF), fontSize: 18, fontFamily: 'Montserrat'),
+              ),
+              leading: Image.asset("asset/images/subject.png"), //add icon
+              childrenPadding: const EdgeInsets.only(left: 0), //children padding
+              children: [
+                DrawerListTile(
+                  title: "Add Subject",
+                  svgSrc: "",
+                  press: () {
+                    pageIndexProvider.setPageIndex(4);
+                  },
+                ),
+                DrawerListTile(
+                  title: "All Subject",
+                  svgSrc: "",
+                  press: () {
+                    pageIndexProvider.setPageIndex(5);
+                  },
+                ),
+
+                //more child menu
+              ],
             ),
             const Divider(
               thickness: 2,
@@ -160,16 +180,16 @@ class CustomerAdminSideMenue extends StatelessWidget {
 }
 
 class DrawerListTile extends StatelessWidget {
-   DrawerListTile({
+  DrawerListTile({
     Key? key,
     // For selecting those three line once press "Command+D"
     required this.title,
-     required this.svgSrc,
+    required this.svgSrc,
     required this.press,
   }) : super(key: key);
 
   final String title;
-String    svgSrc;
+  String svgSrc;
   final VoidCallback press;
 
   @override
@@ -178,10 +198,11 @@ String    svgSrc;
       contentPadding: const EdgeInsets.only(left: 17),
       onTap: press,
       horizontalTitleGap: 0.0,
-     
-      leading: svgSrc !=''? Image.asset(svgSrc
-          //"asset/images/edit.png",
-          ):Icon(Icons.arrow_right),
+      leading: svgSrc != ''
+          ? Image.asset(svgSrc
+              //"asset/images/edit.png",
+              )
+          : Icon(Icons.arrow_right),
       minLeadingWidth: 57,
       title: Text(
         title,

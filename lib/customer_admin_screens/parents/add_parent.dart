@@ -11,33 +11,33 @@ import '../../firebase/crud/Firebase_crud.dart';
 import '../component/header.dart';
 import '../component/helper.dart';
 
-class AddTeacher extends StatefulWidget {
-  const AddTeacher({super.key});
+class AddParent extends StatefulWidget {
+  const AddParent({super.key});
 
   // ignore: prefer_typing_uninitialized_variables
 
   @override
-  State<AddTeacher> createState() => _AddTeacherState();
+  State<AddParent> createState() => _AddParentState();
 }
 
-class _AddTeacherState extends State<AddTeacher> {
-  TextEditingController teacherEmailController = TextEditingController();
-  TextEditingController teacherPasswordController = TextEditingController();
-  TextEditingController teacherPhnNoController = TextEditingController();
-  TextEditingController teacherCnicController = TextEditingController();
-  TextEditingController teacherAdressController = TextEditingController();
-  TextEditingController teacherNameController = TextEditingController();
+class _AddParentState extends State<AddParent> {
+  TextEditingController parentEmailController = TextEditingController();
+  TextEditingController parentPasswordController = TextEditingController();
+  TextEditingController parentPhnNoController = TextEditingController();
+  TextEditingController parentCnicController = TextEditingController();
+  TextEditingController parentAdressController = TextEditingController();
+  TextEditingController parentNameController = TextEditingController();
 
   List<StudentModel> studentModelList = [];
   List<ParentModel> parentModelList = [];
   @override
   void dispose() {
-    teacherEmailController.dispose();
-    teacherPasswordController.dispose();
-    teacherPhnNoController.dispose();
-    teacherCnicController.dispose();
-    teacherAdressController.dispose();
-    teacherNameController.dispose();
+    parentEmailController.dispose();
+    parentPasswordController.dispose();
+    parentPhnNoController.dispose();
+    parentCnicController.dispose();
+    parentAdressController.dispose();
+    parentNameController.dispose();
     // TODO: implement dispose
     super.dispose();
   }
@@ -58,7 +58,7 @@ class _AddTeacherState extends State<AddTeacher> {
           Padding(
             padding: const EdgeInsets.only(left: 29, top: 15),
             child:
-                text('Teacher', color: Colors.black, size: 22.0, fontWeight: FontWeight.w600, fontfamily: 'Montserrat'),
+                text('Parent', color: Colors.black, size: 22.0, fontWeight: FontWeight.w600, fontfamily: 'Montserrat'),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 29, top: 15),
@@ -70,7 +70,7 @@ class _AddTeacherState extends State<AddTeacher> {
                   Icons.arrow_forward_ios,
                   color: Colors.red,
                 ),
-                text('Add Teacher',
+                text('Add Parent',
                     color: Colors.red, size: 18.0, fontWeight: FontWeight.w600, fontfamily: 'Montserrat'),
               ],
             ),
@@ -87,7 +87,7 @@ class _AddTeacherState extends State<AddTeacher> {
                   child: Form(
                     key: _formKey,
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      text('Add New Teacher',
+                      text('Add New Parent',
                           color: Colors.black, size: 26.0, fontWeight: FontWeight.bold, fontfamily: 'Montserrat'),
                       const SizedBox(
                         height: 20,
@@ -95,11 +95,11 @@ class _AddTeacherState extends State<AddTeacher> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Helper.customTextFeildWithLabel('Name *', teacherNameController, 'Enter teacher name'),
+                          Helper.customTextFeildWithLabel('Name *', parentNameController, 'Enter parent name'),
                           Helper.customDropDownWidget(context, 'Gender *', Helper.genderDropDown(context)),
-                          Helper.customTextFeildWithLabel('Email *', teacherEmailController, 'Enter parent email'),
+                          Helper.customTextFeildWithLabel('Email *', parentEmailController, 'Enter parent email'),
                           Helper.customTextFeildWithLabel(
-                              'Password *', teacherPasswordController, 'Enter student password'),
+                              'Password *', parentPasswordController, 'Enter student password'),
                         ],
                       ),
                       const SizedBox(
@@ -108,9 +108,9 @@ class _AddTeacherState extends State<AddTeacher> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Helper.customTextFeildWithLabel('CNIC# *', teacherCnicController, 'Enter Phn No #'),
-                          Helper.customTextFeildWithLabel('Phn No *', teacherPhnNoController, 'Enter Phn No #'),
-                          Helper.customTextFeildWithLabel('Adress *', teacherAdressController, 'Enter Adress'),
+                          Helper.customTextFeildWithLabel('CNIC# *', parentCnicController, 'Enter Phn No #'),
+                          Helper.customTextFeildWithLabel('Phn No *', parentPhnNoController, 'Enter Phn No #'),
+                          Helper.customTextFeildWithLabel('Adress *', parentAdressController, 'Enter Adress'),
                           Container(
                             width: 216,
                             height: 49,
@@ -129,7 +129,7 @@ class _AddTeacherState extends State<AddTeacher> {
                           onTap: () async {
                             if (_formKey.currentState!.validate()) {
                               await FirebaseCrud()
-                                  .regesterUserInFireAuth(teacherEmailController, teacherPasswordController, context);
+                                  .regesterUserInFireAuth(parentEmailController, parentPasswordController, context);
                               await addUserDateIntoFirestore();
                             }
                           },
@@ -162,18 +162,18 @@ class _AddTeacherState extends State<AddTeacher> {
     List<ParentModel> parentList = [];
     parentList.add(ParentModel(
         parentId: parentId,
-        name: teacherNameController.text.toLowerCase().toString(),
-        email: teacherEmailController.text.toLowerCase().toString(),
-        password: teacherPasswordController.text.toLowerCase().toString(),
-        adress: teacherAdressController.text.toLowerCase().toString(),
-        cnicNo: teacherCnicController.text.toString(),
-        phnNo: teacherPhnNoController.text.toLowerCase().toString(),
+        name: parentNameController.text.toLowerCase().toString(),
+        email: parentEmailController.text.toLowerCase().toString(),
+        password: parentPasswordController.text.toLowerCase().toString(),
+        adress: parentAdressController.text.toLowerCase().toString(),
+        cnicNo: parentCnicController.text.toString(),
+        phnNo: parentPhnNoController.text.toLowerCase().toString(),
         genderId: studentProvider.genderId,
         createdAt: nowDate,
         createdBy: 'Admin'));
 
     await FirebaseCrud()
         .setDocumentData(parentList[0].toJson(), 'Parent', parentId)
-        .then((value) => parentList.clear());
+        .then((value) => parentList .clear());
   }
 }

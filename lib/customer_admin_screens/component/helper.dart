@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:student_tracking_portal/core/models/gender_model/gender_model.dart';
 import 'package:student_tracking_portal/core/models/section_model/section_model.dart';
+import 'package:student_tracking_portal/customer_admin_screens/customer_provider/subject_provider.dart';
 import 'package:student_tracking_portal/customer_admin_screens/home_screen/customer_admin_home.dart';
 
 import '../../core/app_config/app_config.dart';
@@ -23,13 +26,13 @@ class Helper {
     GenderModel(gender: 'Female', genderId: 'bbcbxcmnnnn18778'),
   ];
   static List<ClassModel> classList = [
-    ClassModel(classId: 'jbkvnlgblh010iuoerivnvm', className: '6th'),
-    ClassModel(classId: 'jbkvnlgblhe204erivnvm', className: '7th'),
-    ClassModel(classId: 'jbkvnl985899rhiuoerivnvm', className: '8th'),
+    ClassModel(classId: 'jbkvnlgblh010iuoececerivnvm', className: '6th'),
+    ClassModel(classId: 'jbkvnlgblhe204eridevnvm', className: '7th'),
+    ClassModel(classId: 'jbkvnl985899rhi2euoerivnvm', className: '8th'),
     ClassModel(classId: 'jbkvnlgblherhiuoerivnvm', className: '9th'),
-    ClassModel(classId: 'jbkvnlgblherhiuoerivnvm', className: '10th'),
-    ClassModel(classId: 'jbkvnlgblherhiuoerivnvm', className: '11th'),
-    ClassModel(classId: 'jbkvnlgblherhiuoerivnvm', className: '12th'),
+    ClassModel(classId: 'jbkvnlgblherhiuoerivqwsnvm', className: '10th'),
+    ClassModel(classId: 'jbkvnlgblherhiuo2w2erivnvm', className: '11th'),
+    ClassModel(classId: 'jbkvnlgblherqsdhiuoerivnvm', className: '12th'),
   ];
   static Widget customTextFeildWithLabel(String title, TextEditingController widgetController, String validateMsg) {
     return Column(
@@ -44,6 +47,7 @@ class Helper {
           height: 49.0,
           color: const Color(0xffDDDEEE),
           child: TextFormField(
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(errorBorder: OutlineInputBorder()),
             controller: widgetController,
             validator: (value) {
@@ -54,6 +58,74 @@ class Helper {
           ),
         )
       ],
+    );
+  }
+
+  static Widget subjectDropDownList(context) {
+    // var branchProvider = Provider.of<BranchProvider>(context, listen: false);
+    // final provider = Provider.of<screenprovider>(context);
+    return Container(
+      // width: 200,
+      // height: 50,
+      color: const Color(0xFFF2F1F1),
+
+      child: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('Subject').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CupertinoActivityIndicator());
+          } else if (snapshot.hasData == false) {
+            return const Center(
+              child: CupertinoActivityIndicator(),
+            );
+          }
+          return Consumer<SubjectProvider>(
+            builder: (context, value, child) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 30, right: 30),
+                child: DropdownButtonFormField<String>(
+                  dropdownColor: Colors.white,
+                  isDense: true,
+                  hint: text('Select subject',
+                      size: 16.0, fontfamily: 'SofiaPro', fontWeight: FontWeight.w400, color: Colors.black),
+                  value: value.subjectName,
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                    color: Colors.black,
+                  ),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.black),
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'This Field Required*';
+                    }
+                    return null;
+                  },
+                  onChanged: (String? newValue) {
+                    var result = snapshot.data!.docs.where((element) => element['subjectName'] == newValue);
+                    var res = result.first.id.toString();
+
+                    value.setSubjectId(res);
+                    value.setSubjectName(newValue!);
+                  },
+                  items: snapshot.data!.docs.map((DocumentSnapshot document) {
+                    Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+
+                    return DropdownMenuItem<String>(
+                      value: data['subjectName'],
+                      child: Text(
+                        data['subjectName'],
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 
@@ -177,7 +249,7 @@ class Helper {
               padding: const EdgeInsets.only(left: 30, right: 30),
               child: DropdownButtonFormField<String>(
                 dropdownColor: Colors.white,
-                hint: text('Choose',
+                hint: text('Select class',
                     size: 16.0, fontfamily: 'SofiaPro', fontWeight: FontWeight.w400, color: Colors.black),
                 value: value.className,
                 icon: const Icon(

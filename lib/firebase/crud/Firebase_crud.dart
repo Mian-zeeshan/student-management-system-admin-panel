@@ -23,19 +23,15 @@ class FirebaseCrud {
     _fireStoreCollection.collection(collectionPath).doc(id).set(data);
   }
 
-  Future regesterStudent(
-    TextEditingController stdEmailController,
-    TextEditingController stdPasswordController,
-    context
-  ) async {
+  Future regesterUserInFireAuth(
+      TextEditingController stdEmailController, TextEditingController stdPasswordController, context) async {
     try {
-
       var studentProvider = Provider.of<CustomerAdminProvider>(context, listen: false);
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: stdEmailController.text.toString(), password: stdPasswordController.text.toString());
       String userId = userCredential.user!.uid.toString();
-      studentProvider.setStudentId(userId);
-     
+      studentProvider.setUserUUId(userId);
+
       // ignore: use_build_context_synchronously
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -57,5 +53,24 @@ class FirebaseCrud {
       } else if (e.code == 'email-already-in-use') {}
       // ignore: empty_catches
     } catch (e) {}
+  }
+
+  static Future<bool> checkDuplicateData(String fieldName, String value, String collection) async {
+    final CollectionReference collectionReference = FirebaseFirestore.instance.collection(collection);
+
+    final QuerySnapshot snapshot = await collectionReference.where(fieldName, isEqualTo: value).get();
+    return snapshot.docs.isNotEmpty; // Returns true if any documents match the query
+  }
+
+  static Future<String> getNameById(String docId, String collection, String fieldName) async {
+    //  var userProvider = Provider.of<AddUserProvider>(context, listen: false);
+    final CollectionReference collectionReference = FirebaseFirestore.instance.collection(collection);
+    String name = '';
+    await collectionReference.doc(docId).get().then((DocumentSnapshot docs) {
+      final data = docs.data() as Map<String, dynamic>;
+      name = data[fieldName].toString();
+    });
+
+    return name;
   }
 }

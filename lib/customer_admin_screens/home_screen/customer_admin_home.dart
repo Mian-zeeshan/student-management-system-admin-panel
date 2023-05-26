@@ -39,7 +39,7 @@ class CustomerAdminHomeScreen extends StatelessWidget {
               builder: (context, value, child) {
                 return Expanded(
                   flex: 5,
-                  child: AppConfig.customerAdminPagesList[value.pageIndex],
+                  child: AppConfig.customerAdminPagesList[8],
                 );
               },
             ),

@@ -12,6 +12,7 @@ import '../../core/constants/color_constants.dart';
 import '../../core/models/parent_model/parent_model.dart';
 import '../../core/models/student_model/student_model.dart';
 import '../../firebase/crud/Firebase_crud.dart';
+import '../component/header.dart';
 import '../component/helper.dart';
 
 class AddStudent extends StatefulWidget {
@@ -69,47 +70,8 @@ class _AddStudentState extends State<AddStudent> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Card(
-            child: Container(
-              height: 70.0,
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 40),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.search,
-                      color: Color(0xffA3A3A3),
-                      size: 40,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    text('Search', color: const Color(0xffA3A3A3), size: 18, fontfamily: 'Montserrat'),
-                    SizedBox(
-                      width: size.width * 0.61,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Image.asset('asset/images/msg.png'),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Image.asset('asset/images/bell.png'),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Image.asset('asset/images/line.png'),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Image.asset('asset/images/profile.png'),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          //Header
+         headerComponent(size),
           Padding(
             padding: const EdgeInsets.only(left: 29, top: 15),
             child:
@@ -195,7 +157,7 @@ class _AddStudentState extends State<AddStudent> {
                         child: InkWell(
                           onTap: () async {
                             if (_formKey.currentState!.validate()) {
-                              await FirebaseCrud().regesterStudent(stdEmailController, stdPasswordController, context);
+                              await FirebaseCrud().regesterUserInFireAuth(stdEmailController, stdPasswordController, context);
                               await addStudentDateIntoFirestore();
                             }
                           },
@@ -224,7 +186,7 @@ class _AddStudentState extends State<AddStudent> {
     String nowDate = formatter.format(now);
 
     var studentProvider = Provider.of<CustomerAdminProvider>(context, listen: false);
-    String? studentId = studentProvider.studentId;
+    String? studentId = studentProvider.UserUUId;
 
     List<StudentModel> studentList = [];
     studentList.add(StudentModel(

@@ -8,6 +8,7 @@ import 'package:student_tracking_portal/login/provider/login_provider.dart';
 import 'package:student_tracking_portal/product_admin_screens/providers/customer_provider.dart';
 import 'package:student_tracking_portal/provider/customer_admin_provider.dart';
 import 'core/constants/color_constants.dart';
+import 'customer_admin_screens/customer_provider/subject_provider.dart';
 import 'customer_admin_screens/home_screen/customer_admin_home.dart';
 import 'provider/user_provider.dart';
 import 'provider/page_index_provider.dart';
@@ -64,6 +65,9 @@ class MyApp extends StatelessWidget {
         ),
          ChangeNotifierProvider(
           create: (context) => CustomerAdminProvider(),
+        ),
+         ChangeNotifierProvider(
+          create: (context) => SubjectProvider(),
         ),
       ],
       child: MaterialApp(
