@@ -1,31 +1,35 @@
-class StudentModel{
-String? stdId;
-String? name;
-String? rollNo;
-String? gender;
-String? className;
-String? classSection;
-String? email;
-String? password;
-String? createdAt;
-String? createdBy;
+class StudentModel {
+  String? studentId;
+  String? name;
+  String? rollNo;
+  String? gender;
+  String? className;
+  String? classSection;
+  String? email;
+  String? password;
+  String? CNIC;
+  String? fatherCNIC;
+  String? createdAt;
+  String? createdBy;
 
   StudentModel({
-   required this.stdId,
-   required this.name,
-   required this.rollNo,
-   required this.gender, 
-   required this.className,
-   required this.classSection,
-  required  this.email,
-  required  this.password,
-   required this.createdAt,
-   required this.createdBy,
+    required this.studentId,
+    required this.name,
+    required this.rollNo,
+    required this.gender,
+    required this.className,
+    required this.classSection,
+    required this.email,
+    required this.password,
+    required this.CNIC,
+    required this.fatherCNIC,
+    required this.createdAt,
+    required this.createdBy,
   });
 
-    factory StudentModel.fromJson(Map<String, dynamic> json) {
+  factory StudentModel.fromJson(Map<String, dynamic> json) {
     return StudentModel(
-      stdId: json['stdId'],
+      studentId: json['stdId'],
       name: json['name'],
       rollNo: json['rollNo'],
       gender: json['gender'],
@@ -33,14 +37,16 @@ String? createdBy;
       classSection: json['classSection'],
       email: json['email'],
       password: json['password'],
+      CNIC: json['CNIC'],
+      fatherCNIC: json['fatherCNIC'],
       createdAt: json['createdAt'],
       createdBy: json['createdBy'],
     );
   }
 
-    Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
-      'stdId': stdId,
+      'stdId': studentId,
       'name': name,
       'rollNo': rollNo,
       'gender': gender,
@@ -48,11 +54,10 @@ String? createdBy;
       'classSection': classSection,
       'email': email,
       'password': password,
+      'CNIC': CNIC,
+      'fatherCNIC': fatherCNIC,
       'createdAt': createdAt,
       'createdBy': createdBy,
     };
   }
 }
-
-
-

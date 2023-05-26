@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:student_tracking_portal/provider/customer_admin_provider.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:intl/intl.dart';
@@ -10,6 +12,7 @@ import '../../core/constants/color_constants.dart';
 import '../../core/models/parent_model/parent_model.dart';
 import '../../core/models/student_model/student_model.dart';
 import '../../firebase/crud/Firebase_crud.dart';
+import '../component/header.dart';
 import '../component/helper.dart';
 
 class AddStudent extends StatefulWidget {
@@ -32,12 +35,15 @@ class _AddStudentState extends State<AddStudent> {
   TextEditingController parentCnicController = TextEditingController();
   TextEditingController parentAdressController = TextEditingController();
   TextEditingController parentNameController = TextEditingController();
+  TextEditingController CNICNoController = TextEditingController();
+  TextEditingController fatgherCNICNoController = TextEditingController();
 
-
-List<StudentModel> studentModelList=[];
-List<ParentModel> parentModelList=[];
+  List<StudentModel> studentModelList = [];
+  List<ParentModel> parentModelList = [];
   @override
   void dispose() {
+    CNICNoController.dispose();
+    fatgherCNICNoController.dispose();
     stdNameController.dispose();
     stdRollController.dispose();
     stdEmailController.dispose();
@@ -51,10 +57,12 @@ List<ParentModel> parentModelList=[];
     // TODO: implement dispose
     super.dispose();
   }
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
     // ignore: prefer_const_constructors
     return SizedBox(
       height: size.height,
@@ -62,47 +70,8 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Card(
-            child: Container(
-              height: 70.0,
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 40),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.search,
-                      color: Color(0xffA3A3A3),
-                      size: 40,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    text('Search', color: const Color(0xffA3A3A3), size: 18, fontfamily: 'Montserrat'),
-                    SizedBox(
-                      width: size.width * 0.61,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Image.asset('asset/images/msg.png'),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Image.asset('asset/images/bell.png'),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Image.asset('asset/images/line.png'),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Image.asset('asset/images/profile.png'),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          //Header
+         headerComponent(size),
           Padding(
             padding: const EdgeInsets.only(left: 29, top: 15),
             child:
@@ -133,7 +102,6 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
                   child: Form(
-
                     key: _formKey,
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       text('Add New Students',
@@ -144,66 +112,55 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Helper.customTextFeildWithLabel('Name *',stdNameController,'Enter student name'),
-                          Helper.customTextFeildWithLabel('Roll No *',stdRollController,'Enter student roll no'),
-                          Helper.customTextFeildWithLabel('Gender *',stdRollController,'Select student gender'),
-                          Helper.customTextFeildWithLabel('Class *',stdRollController,'Select student class'),
+                          Helper.customTextFeildWithLabel('Name *', stdNameController, 'Enter student name'),
+                          Helper.customTextFeildWithLabel('Roll No *', stdRollController, 'Enter student roll no'),
+                          Helper.customDropDownWidget(context, 'Gender *', Helper.genderDropDown(context)),
+                          Helper.customDropDownWidget(context, 'Class *', Helper.classDropDown(context)),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Helper.customTextFeildWithLabel('Section *',stdRollController,'Select student section'),
-                          Helper.customTextFeildWithLabel('Email *',stdEmailController,'Enter student email'),
-                          Helper.customTextFeildWithLabel('Password *',stdPasswordController,'Enter student password'),
-                          Container(
-                            width: 216,
-                            height: 49,
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      text('Add New Parents',
-                          color: Colors.black, size: 26.0, fontWeight: FontWeight.bold, fontfamily: 'Montserrat'),
-                      const SizedBox(
+                      SizedBox(
                         height: 20,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Helper.customTextFeildWithLabel('Name *',parentNameController,'Enter parent name'),
-                          Helper.customTextFeildWithLabel('Phone No *',parentPhnNoController,'Enter parent phn no'),
-                          Helper.customTextFeildWithLabel('Email *',parentEmailController,'Enter parent email'),
-                          Helper.customTextFeildWithLabel('Password *',parentPasswordController,'Enter parent password'),
+                          Helper.customDropDownWidget(context, 'Section *', Helper.sectionDropDown(context)),
+                          Helper.customTextFeildWithLabel('Email *', stdEmailController, 'Enter student email'),
+                          Helper.customTextFeildWithLabel(
+                              'Password *', stdPasswordController, 'Enter student password'),
+                          Helper.customTextFeildWithLabel('CNIC# *', CNICNoController, 'Enter CNIC number'),
+                          // Container(
+                          //   width: 216,
+                          //   height: 49,
+                          // )
                         ],
+                      ),
+                      SizedBox(
+                        height: 20,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Helper.customTextFeildWithLabel('Adress *',parentAdressController,'Enter parent address'),
-                          Helper.customTextFeildWithLabel('CNIC No *',parentCnicController,'Enter CNIC No'),
-                          //Helper.customTextFeildWithLabel(' *'),
-                          Container(
-                            width: 216,
-                            height: 49,
-                          ),
-                          Container(
-                            width: 216,
-                            height: 49,
-                          )
+                          Helper.customTextFeildWithLabel(
+                              'Father CNIC# *', fatgherCNICNoController, 'Father CNIC number'),
+                          // Container(
+                          //   width: 216,
+                          //   height: 49,
+                          // )
                         ],
+                      ),
+                      const SizedBox(
+                        height: 30,
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 40, left: size.width * 0.6),
-                        child: InkWell(onTap: ()  async{
-                          if(_formKey.currentState!.validate()){
-              await   FirebaseCrud().regesterStudent(stdEmailController,stdPasswordController);
-                     await     FirebaseCrud().regesterParent(parentEmailController,parentPasswordController);
-                              // addDateIntoModels();
-                          }
-                        },
+                        child: InkWell(
+                          onTap: () async {
+                            if (_formKey.currentState!.validate()) {
+                              await FirebaseCrud().regesterUserInFireAuth(stdEmailController, stdPasswordController, context);
+                              await addStudentDateIntoFirestore();
+                            }
+                          },
                           child: Container(
                             child: Center(child: text('Save', color: Colors.white, size: 20.0)),
                             width: 250,
@@ -222,13 +179,31 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
       ),
     );
   }
-//   addDateIntoModels(){
-//      var now = DateTime.now();
-//                               var formatter = DateFormat('yyyy-MM-dd');
-//                               String nowDate = formatter.format(now);
-//                               var uuid = const Uuid().v4();
-//     studentModelList.add(StudentModel(stdId: stdId, name: name, rollNo: rollNo, gender: gender, className: className, classSection: classSection, email: email, password: password, createdAt: createdAt, createdBy: createdBy))
 
-//  }
+  Future addStudentDateIntoFirestore() async {
+    var now = DateTime.now();
+    var formatter = DateFormat('yyyy-MM-dd');
+    String nowDate = formatter.format(now);
 
+    var studentProvider = Provider.of<CustomerAdminProvider>(context, listen: false);
+    String? studentId = studentProvider.UserUUId;
+
+    List<StudentModel> studentList = [];
+    studentList.add(StudentModel(
+        studentId: studentId,
+        name: stdNameController.text.toString().toLowerCase(),
+        rollNo: stdRollController.text.toLowerCase().toString(),
+        gender: studentProvider.genderId,
+        className: studentProvider.classId,
+        classSection: studentProvider.sectionId,
+        email: stdEmailController.text.toLowerCase().toString(),
+        password: stdPasswordController.text.toString(),
+        CNIC: CNICNoController.text.toString(),
+        fatherCNIC: fatgherCNICNoController.text.toString(),
+        createdAt: nowDate,
+        createdBy: 'Admin'));
+
+   await  FirebaseCrud().setDocumentData(studentList[0].toJson(), 'Student', studentId).then((value) =>     studentList.clear());
+
+  }
 }

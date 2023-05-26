@@ -1,14 +1,16 @@
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../customer_admin_screens/customer_dashboard.dart/customer_dashboard.dart';
+
+import '../../customer_admin_screens/parents/add_parent.dart';
 import '../../customer_admin_screens/parents/all_parents.dart';
 import '../../customer_admin_screens/students/add_student.dart';
 import '../../customer_admin_screens/students/all_student.dart';
+import '../../customer_admin_screens/subject/add_subject.dart';
+import '../../customer_admin_screens/subject/assign_subject.dart';
 import '../../customer_admin_screens/teachers/add_teacher.dart';
 import '../../customer_admin_screens/teachers/all_teacher.dart';
 import '../../dashboard/dashboard_screen.dart';
@@ -21,11 +23,14 @@ class AppConfig {
   static var productAdminPagesList = [const DashboardScreen(), CustomerScreen(), CustomerAdminScreen()];
   static var customerAdminPagesList = [
     const CustomerDashboardScreen(),
-    AddStudent(),
-    AllStudent(),
-    AllParent(),
-    AddTeacher(),
-    AllTeacher()
+    const AddStudent(),
+    const AllStudent(),
+    const AddParent(),
+    const AllParent(),
+    const AddTeacher(),
+    const AllTeacher(),
+    const AddSubject(),
+    const AssignSubject(),
   ];
 
   static addDataComponent(String collectionName, String docId, Map<String, Object> map, context) {
@@ -182,3 +187,16 @@ Text text(
     style: TextStyle(color: color, fontSize: size, fontWeight: fontWeight, fontFamily: fontfamily),
   );
 }
+
+
+//  flutterToast( String msg){
+//   return Fluttertoast.showToast(
+//   msg: msg,
+//   toastLength: Toast.LENGTH_SHORT,
+//   gravity: ToastGravity.BOTTOM,
+//   timeInSecForIosWeb: 1,
+//   backgroundColor: Colors.red,
+//   textColor: Colors.white,
+//   fontSize: 16.0
+// );
+// }
