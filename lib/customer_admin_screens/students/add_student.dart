@@ -7,6 +7,7 @@ import 'package:uuid/uuid.dart';
 
 import 'package:intl/intl.dart';
 
+import '../../common/common.dart';
 import '../../core/app_config/app_config.dart';
 import '../../core/constants/color_constants.dart';
 import '../../core/models/parent_model/parent_model.dart';
@@ -71,7 +72,7 @@ class _AddStudentState extends State<AddStudent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //Header
-         headerComponent(size),
+          headerComponent(size),
           Padding(
             padding: const EdgeInsets.only(left: 29, top: 15),
             child:
@@ -118,7 +119,7 @@ class _AddStudentState extends State<AddStudent> {
                           Helper.customDropDownWidget(context, 'Class *', Helper.classDropDown(context)),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
@@ -135,7 +136,7 @@ class _AddStudentState extends State<AddStudent> {
                           // )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
@@ -157,15 +158,19 @@ class _AddStudentState extends State<AddStudent> {
                         child: InkWell(
                           onTap: () async {
                             if (_formKey.currentState!.validate()) {
-                              await FirebaseCrud().regesterUserInFireAuth(stdEmailController, stdPasswordController, context);
-                              await addStudentDateIntoFirestore();
+                              await FirebaseCrud()
+                                  .regesterUserInFireAuth(stdEmailController, stdPasswordController, context);
+                              await addStudentDateIntoFirestore().then((value) {
+                                clearController();
+                                showAlertDialog(context, 'Sucessfully added');
+                              });
                             }
                           },
                           child: Container(
-                            child: Center(child: text('Save', color: Colors.white, size: 20.0)),
                             width: 250,
                             height: 50,
                             color: Colors.black,
+                            child: Center(child: text('Save', color: Colors.white, size: 20.0)),
                           ),
                         ),
                       )
@@ -203,7 +208,23 @@ class _AddStudentState extends State<AddStudent> {
         createdAt: nowDate,
         createdBy: 'Admin'));
 
-   await  FirebaseCrud().setDocumentData(studentList[0].toJson(), 'Student', studentId).then((value) =>     studentList.clear());
+    await FirebaseCrud()
+        .setDocumentData(studentList[0].toJson(), 'Student', studentId)
+        .then((value) => studentList.clear());
+  }
 
+  void clearController() {
+    stdNameController.clear();
+    stdRollController.clear();
+    stdEmailController.clear();
+    stdPasswordController.clear();
+    parentEmailController.clear();
+    parentPasswordController.clear();
+    parentPhnNoController.clear();
+    parentCnicController.clear();
+    parentAdressController.clear();
+    parentNameController.clear();
+    CNICNoController.clear();
+    fatgherCNICNoController.clear();
   }
 }

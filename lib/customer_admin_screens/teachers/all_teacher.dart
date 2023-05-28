@@ -76,7 +76,7 @@ class _AllTeacherState extends State<AllTeacher> {
           Padding(
             padding: const EdgeInsets.only(left: 29, top: 15),
             child:
-                text('Student', color: Colors.black, size: 22.0, fontWeight: FontWeight.w600, fontfamily: 'Montserrat'),
+                text('Teacher', color: Colors.black, size: 22.0, fontWeight: FontWeight.w600, fontfamily: 'Montserrat'),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 29, top: 15),
@@ -88,7 +88,7 @@ class _AllTeacherState extends State<AllTeacher> {
                   Icons.arrow_forward_ios,
                   color: Colors.red,
                 ),
-                text('All Parents ',
+                text('All Teachers ',
                     color: Colors.red, size: 18.0, fontWeight: FontWeight.w600, fontfamily: 'Montserrat'),
               ],
             ),
@@ -103,7 +103,7 @@ class _AllTeacherState extends State<AllTeacher> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    text('All Parents Data', size: 28.0),
+                    text('All Teacher Data', size: 28.0),
                     Padding(
                       padding: const EdgeInsets.only(left: 7, right: 40),
                       child: Row(
@@ -125,23 +125,8 @@ class _AllTeacherState extends State<AllTeacher> {
                             ),
                           ),
                           const Spacer(),
-                          Container(
-                            height: 54.0,
-                            width: 348,
-                            color: const Color(0xFFF2F1F1),
-                            child: Center(
-                              child: Helper.classDropDown(context),
-                            ),
-                          ),
-                          const Spacer(),
-                          Container(
-                            child: Center(
-                              child: text('SEARCH', size: 20, color: Colors.white),
-                            ),
-                            height: 54.0,
-                            width: 202,
-                            color: const Color(0xFFD60A0B),
-                          )
+                          
+                         
                         ],
                       ),
                     ),
@@ -224,7 +209,7 @@ class _AllTeacherState extends State<AllTeacher> {
 
                                 child: StreamBuilder<QuerySnapshot>(
                               stream: FirebaseFirestore.instance
-                                  .collection('Parent')
+                                  .collection('Teacher')
                                   // .where('userRole', isEqualTo: 'admin')
                                   .snapshots(),
                               builder: (BuildContext contex, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -297,7 +282,7 @@ class _AllTeacherState extends State<AllTeacher> {
                                                 Expanded(
                                                   child: Text(
                                                     snapshot.data!.docs[index]['phnNo'].toString(),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 18,
                                                         fontWeight: FontWeight.w400,
                                                         color: Color(0xff656262),

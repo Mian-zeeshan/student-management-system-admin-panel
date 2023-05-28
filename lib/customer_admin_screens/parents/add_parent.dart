@@ -4,6 +4,7 @@ import 'package:student_tracking_portal/provider/customer_admin_provider.dart';
 
 import 'package:intl/intl.dart';
 
+import '../../common/common.dart';
 import '../../core/app_config/app_config.dart';
 import '../../core/models/parent_model/parent_model.dart';
 import '../../core/models/student_model/student_model.dart';
@@ -54,7 +55,7 @@ class _AddParentState extends State<AddParent> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         headerComponent(size),
+          headerComponent(size),
           Padding(
             padding: const EdgeInsets.only(left: 29, top: 15),
             child:
@@ -111,7 +112,7 @@ class _AddParentState extends State<AddParent> {
                           Helper.customTextFeildWithLabel('CNIC# *', parentCnicController, 'Enter Phn No #'),
                           Helper.customTextFeildWithLabel('Phn No *', parentPhnNoController, 'Enter Phn No #'),
                           Helper.customTextFeildWithLabel('Adress *', parentAdressController, 'Enter Adress'),
-                          Container(
+                          const SizedBox(
                             width: 216,
                             height: 49,
                           )
@@ -130,14 +131,17 @@ class _AddParentState extends State<AddParent> {
                             if (_formKey.currentState!.validate()) {
                               await FirebaseCrud()
                                   .regesterUserInFireAuth(parentEmailController, parentPasswordController, context);
-                              await addUserDateIntoFirestore();
+                              await addUserDateIntoFirestore().then((value) {
+                                clearController();
+                                showAlertDialog(context, 'Sucessfully added');
+                              });
                             }
                           },
                           child: Container(
-                            child: Center(child: text('Save', color: Colors.white, size: 20.0)),
                             width: 250,
                             height: 50,
                             color: Colors.black,
+                            child: Center(child: text('Save', color: Colors.white, size: 20.0)),
                           ),
                         ),
                       )
@@ -174,6 +178,15 @@ class _AddParentState extends State<AddParent> {
 
     await FirebaseCrud()
         .setDocumentData(parentList[0].toJson(), 'Parent', parentId)
-        .then((value) => parentList .clear());
+        .then((value) => parentList.clear());
+  }
+
+  void clearController() {
+    parentEmailController.clear();
+    parentPasswordController.clear();
+    parentPhnNoController.clear();
+    parentCnicController.clear();
+    parentAdressController.clear();
+    parentNameController.clear();
   }
 }

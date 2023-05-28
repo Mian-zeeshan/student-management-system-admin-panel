@@ -4,9 +4,11 @@ import 'package:student_tracking_portal/provider/customer_admin_provider.dart';
 
 import 'package:intl/intl.dart';
 
+import '../../common/common.dart';
 import '../../core/app_config/app_config.dart';
 import '../../core/models/parent_model/parent_model.dart';
 import '../../core/models/student_model/student_model.dart';
+import '../../core/models/teacher_model/teacher_model.dart';
 import '../../firebase/crud/Firebase_crud.dart';
 import '../component/header.dart';
 import '../component/helper.dart';
@@ -54,7 +56,7 @@ class _AddTeacherState extends State<AddTeacher> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         headerComponent(size),
+          headerComponent(size),
           Padding(
             padding: const EdgeInsets.only(left: 29, top: 15),
             child:
@@ -111,7 +113,7 @@ class _AddTeacherState extends State<AddTeacher> {
                           Helper.customTextFeildWithLabel('CNIC# *', teacherCnicController, 'Enter Phn No #'),
                           Helper.customTextFeildWithLabel('Phn No *', teacherPhnNoController, 'Enter Phn No #'),
                           Helper.customTextFeildWithLabel('Adress *', teacherAdressController, 'Enter Adress'),
-                          Container(
+                          SizedBox(
                             width: 216,
                             height: 49,
                           )
@@ -130,14 +132,17 @@ class _AddTeacherState extends State<AddTeacher> {
                             if (_formKey.currentState!.validate()) {
                               await FirebaseCrud()
                                   .regesterUserInFireAuth(teacherEmailController, teacherPasswordController, context);
-                              await addUserDateIntoFirestore();
+                              await addUserDateIntoFirestore().then((value) {
+                                clearController();
+                                showAlertDialog(context, 'Sucessfully Added');
+                              });
                             }
                           },
                           child: Container(
-                            child: Center(child: text('Save', color: Colors.white, size: 20.0)),
                             width: 250,
                             height: 50,
                             color: Colors.black,
+                            child: Center(child: text('Save', color: Colors.white, size: 20.0)),
                           ),
                         ),
                       )
@@ -158,10 +163,10 @@ class _AddTeacherState extends State<AddTeacher> {
     String nowDate = formatter.format(now);
 
     var studentProvider = Provider.of<CustomerAdminProvider>(context, listen: false);
-    String? parentId = studentProvider.UserUUId;
-    List<ParentModel> parentList = [];
-    parentList.add(ParentModel(
-        parentId: parentId,
+    String? teacherId = studentProvider.UserUUId;
+    List<TeacherModel> teacherList = [];
+    teacherList.add(TeacherModel(
+        teacherId: teacherId,
         name: teacherNameController.text.toLowerCase().toString(),
         email: teacherEmailController.text.toLowerCase().toString(),
         password: teacherPasswordController.text.toLowerCase().toString(),
@@ -173,7 +178,16 @@ class _AddTeacherState extends State<AddTeacher> {
         createdBy: 'Admin'));
 
     await FirebaseCrud()
-        .setDocumentData(parentList[0].toJson(), 'Parent', parentId)
-        .then((value) => parentList.clear());
+        .setDocumentData(teacherList[0].toJson(), 'Teacher', teacherId)
+        .then((value) => teacherList.clear());
+  }
+
+  void clearController() {
+    teacherEmailController.clear();
+    teacherPasswordController.clear();
+    teacherPhnNoController.clear();
+    teacherCnicController.clear();
+    teacherAdressController.clear();
+    teacherNameController.clear();
   }
 }

@@ -11,18 +11,18 @@ import '../../core/models/student_model/student_model.dart';
 import '../../firebase/crud/Firebase_crud.dart';
 import '../component/header.dart';
 import '../component/helper.dart';
-import '../custom_dialogs/dialog_for_course_assign.dart';
+import '../custom_dialogs/dialog_assign_subject_to_teacher.dart';
 
-class AssignSubject extends StatefulWidget {
-  const AssignSubject({super.key});
+class AssignSubjectToTeacher extends StatefulWidget {
+  const AssignSubjectToTeacher({super.key});
 
   // ignore: prefer_typing_uninitialized_variables
 
   @override
-  State<AssignSubject> createState() => _AssignSubjectState();
+  State<AssignSubjectToTeacher> createState() => _AssignSubjectToTeacherState();
 }
 
-class _AssignSubjectState extends State<AssignSubject> {
+class _AssignSubjectToTeacherState extends State<AssignSubjectToTeacher> {
   List<StudentModel> studentModelList = [];
   List<ParentModel> parentModelList = [];
   TextEditingController subjectController = TextEditingController();
@@ -47,7 +47,7 @@ class _AssignSubjectState extends State<AssignSubject> {
 
             Padding(
               padding: const EdgeInsets.only(left: 29, top: 5),
-              child: text('Assign Subjects',
+              child: text('Assign Subjects To Teachers',
                   color: Colors.black, size: 22.0, fontWeight: FontWeight.w600, fontfamily: 'Montserrat'),
             ),
             Padding(
@@ -76,7 +76,7 @@ class _AssignSubjectState extends State<AssignSubject> {
                         width: 200,
                         height: 50,
                         color: Colors.black,
-                        child: Center(child: text('Assign Subject', color: Colors.white, size: 20.0)),
+                        child: Center(child: text('Assign Subjects ', color: Colors.white, size: 20.0)),
                       ),
                     ),
                   ),
@@ -126,19 +126,15 @@ class _AssignSubjectState extends State<AssignSubject> {
                               height: 54.0,
                               width: 348,
                               color: const Color(0xFFF2F1F1),
-                              child: Center(
-                                child: Helper.classDropDown(context),
-                              ),
+                              child: Helper.classDropDown(context),
                             ),
                             const Spacer(),
-                            Container(
+                              Container(
                               height: 54.0,
-                              width: 202,
-                              color: const Color(0xFFD60A0B),
-                              child: Center(
-                                child: text('SEARCH', size: 20, color: Colors.white),
-                              ),
-                            )
+                              width: 348,
+                              color: const Color(0xFFF2F1F1),
+                              child: Helper.sectionDropDown(context),
+                            ),
                           ],
                         ),
                       ),
@@ -184,6 +180,22 @@ class _AssignSubjectState extends State<AssignSubject> {
                                                   fontWeight: FontWeight.w500,
                                                   fontFamily: 'SofiaPro')),
                                         ),
+                                         Expanded(
+                                          child: Text('Section',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: 'SofiaPro')),
+                                        ),
+                                         Expanded(
+                                          child: Text('Teacher',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: 'SofiaPro')),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -201,8 +213,9 @@ class _AssignSubjectState extends State<AssignSubject> {
                                       height: size.height * 0.5,
                                       child: StreamBuilder<QuerySnapshot>(
                                         stream: FirebaseFirestore.instance
-                                            .collection('AssignSubject')
+                                            .collection('AssignSubjectToTeacher')
                                             .where('classId', isEqualTo: value.classId.toString())
+                                             .where('sectionId', isEqualTo: value.sectionId.toString())
                                             // .where('userRole', isEqualTo: 'admin')
                                             .snapshots(),
                                         builder: (BuildContext contex, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -243,28 +256,24 @@ class _AssignSubjectState extends State<AssignSubject> {
                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
                                                           Expanded(
-                                                            child: Row(
-                                                              children: [
-                                                                FutureBuilder<String>(
-                                                                    future: FirebaseCrud.getNameById(
-                                                                        snapshot.data!.docs[index]['subjectId']
-                                                                            .toString(),
-                                                                        'Subject',
-                                                                        'subjectName'),
-                                                                    builder: (BuildContext context,
-                                                                        AsyncSnapshot<String> text) {
-                                                                      return Text(
-                                                                        text.data.toString()[0].toUpperCase() +
-                                                                            text.data.toString().substring(1),
-                                                                        style: const TextStyle(
-                                                                            fontSize: 18,
-                                                                            fontWeight: FontWeight.w400,
-                                                                            color: Color(0xff656262),
-                                                                            fontFamily: 'SofiaPro'),
-                                                                      );
-                                                                    }),
-                                                              ],
-                                                            ),
+                                                            child: FutureBuilder<String>(
+                                                                future: FirebaseCrud.getNameById(
+                                                                    snapshot.data!.docs[index]['subjectId']
+                                                                        .toString(),
+                                                                    'Subject',
+                                                                    'subjectName'),
+                                                                builder: (BuildContext context,
+                                                                    AsyncSnapshot<String> text) {
+                                                                  return Text(
+                                                                    text.data.toString()[0].toUpperCase() +
+                                                                        text.data.toString().substring(1),
+                                                                    style: const TextStyle(
+                                                                        fontSize: 18,
+                                                                        fontWeight: FontWeight.w400,
+                                                                        color: Color(0xff656262),
+                                                                        fontFamily: 'SofiaPro'),
+                                                                  );
+                                                                }),
                                                           ),
                                                           Expanded(
                                                             child: Text(
@@ -276,6 +285,37 @@ class _AssignSubjectState extends State<AssignSubject> {
                                                                   color: Color(0xff656262),
                                                                   fontFamily: 'SofiaPro'),
                                                             ),
+                                                          ),
+                                                           Expanded(
+                                                            child: Text(
+                                                              customerAdminProvider.sectionName.toString(),
+                                                              //snapshot.data!.docs[index]['email'].toString(),
+                                                              style: const TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight: FontWeight.w400,
+                                                                  color: Color(0xff656262),
+                                                                  fontFamily: 'SofiaPro'),
+                                                            ),
+                                                          ),
+                                                           Expanded(
+                                                            child: FutureBuilder<String>(
+                                                                future: FirebaseCrud.getNameById(
+                                                                    snapshot.data!.docs[index]['teacherId']
+                                                                        .toString(),
+                                                                    'Teacher',
+                                                                    'name'),
+                                                                builder: (BuildContext context,
+                                                                    AsyncSnapshot<String> text) {
+                                                                  return Text(
+                                                                    text.data.toString()[0].toUpperCase() +
+                                                                        text.data.toString().substring(1),
+                                                                    style: const TextStyle(
+                                                                        fontSize: 18,
+                                                                        fontWeight: FontWeight.w400,
+                                                                        color: Color(0xff656262),
+                                                                        fontFamily: 'SofiaPro'),
+                                                                  );
+                                                                }),
                                                           ),
                                                         ],
                                                       ),
@@ -298,7 +338,6 @@ class _AssignSubjectState extends State<AssignSubject> {
                 ),
               ),
             )
-          
           ],
         ),
       ),
@@ -310,8 +349,8 @@ void _showCustomDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return SubjectAssignDialog(
-        title: 'Assign Subject',
+      return SubjectAssignToTeacherDialog(
+        title: 'Assign Subjects to Teacher',
         message: '',
       );
     },

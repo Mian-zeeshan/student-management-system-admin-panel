@@ -47,13 +47,14 @@ class Helper {
           height: 49.0,
           color: const Color(0xffDDDEEE),
           child: TextFormField(
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(errorBorder: OutlineInputBorder()),
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(errorBorder: OutlineInputBorder()),
             controller: widgetController,
             validator: (value) {
               if (value!.isEmpty) {
                 return validateMsg;
               }
+              return null;
             },
           ),
         )
@@ -61,8 +62,7 @@ class Helper {
     );
   }
 
-  static Widget subjectDropDownList(context) {
-    // var branchProvider = Provider.of<BranchProvider>(context, listen: false);
+  static Widget teacherDropDownList(context) {
     // final provider = Provider.of<screenprovider>(context);
     return Container(
       // width: 200,
@@ -70,7 +70,7 @@ class Helper {
       color: const Color(0xFFF2F1F1),
 
       child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('Subject').snapshots(),
+        stream: FirebaseFirestore.instance.collection('Teacher').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CupertinoActivityIndicator());
@@ -79,16 +79,18 @@ class Helper {
               child: CupertinoActivityIndicator(),
             );
           }
-          return Consumer<SubjectProvider>(
+          return Consumer<CustomerAdminProvider>(
             builder: (context, value, child) {
               return Padding(
-                padding: const EdgeInsets.only(left: 30, right: 30),
+                padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
                 child: DropdownButtonFormField<String>(
+                  decoration:
+                      InputDecoration.collapsed(hintText: '', floatingLabelBehavior: FloatingLabelBehavior.never),
                   dropdownColor: Colors.white,
                   isDense: true,
-                  hint: text('Select subject',
+                  hint: text('Select Teacher',
                       size: 16.0, fontfamily: 'SofiaPro', fontWeight: FontWeight.w400, color: Colors.black),
-                  value: value.subjectName,
+                  value: value.userName,
                   icon: const Icon(
                     Icons.arrow_drop_down,
                     color: Colors.black,
@@ -103,23 +105,91 @@ class Helper {
                     return null;
                   },
                   onChanged: (String? newValue) {
-                    var result = snapshot.data!.docs.where((element) => element['subjectName'] == newValue);
+                    var result = snapshot.data!.docs.where((element) => element['name'] == newValue);
                     var res = result.first.id.toString();
-
-                    value.setSubjectId(res);
-                    value.setSubjectName(newValue!);
+                    value.setUserUUId(res);
+                    value.setUserName(newValue);
                   },
                   items: snapshot.data!.docs.map((DocumentSnapshot document) {
                     Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
                     return DropdownMenuItem<String>(
-                      value: data['subjectName'],
+                      value: data['name'],
                       child: Text(
-                        data['subjectName'],
-                        style: TextStyle(color: Colors.black),
+                        data['name'],
+                        style: const TextStyle(color: Colors.black),
                       ),
                     );
                   }).toList(),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  static Widget subjectDropDownList(context) {
+    // var branchProvider = Provider.of<BranchProvider>(context, listen: false);
+    // final provider = Provider.of<screenprovider>(context);
+    return Container(
+      color: const Color(0xFFF2F1F1),
+      child: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('Subject').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CupertinoActivityIndicator());
+          } else if (snapshot.hasData == false) {
+            return const Center(
+              child: CupertinoActivityIndicator(),
+            );
+          }
+          return Consumer<SubjectProvider>(
+            builder: (context, value, child) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
+                child: Container(
+                  child: DropdownButtonFormField<String>(
+                    decoration:
+                        InputDecoration.collapsed(hintText: '', floatingLabelBehavior: FloatingLabelBehavior.never),
+                    dropdownColor: Colors.white,
+                    isDense: true,
+                    hint: text('Select subject',
+                        size: 16.0, fontfamily: 'SofiaPro', fontWeight: FontWeight.w400, color: Colors.black),
+                    value: value.subjectName,
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.black,
+                    ),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.black),
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return 'This Field Required*';
+                      }
+                      return null;
+                    },
+                    onChanged: (String? newValue) {
+                      var result = snapshot.data!.docs.where((element) => element['subjectName'] == newValue);
+                      var res = result.first.id.toString();
+
+                      value.setSubjectId(res);
+                      value.setSubjectName(newValue!);
+                    },
+                    items: snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+
+                      return DropdownMenuItem<String>(
+                        value: data['subjectName'],
+                        child: Text(
+                          data['subjectName'],
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 ),
               );
             },
@@ -150,10 +220,17 @@ class Helper {
         child: Consumer<CustomerAdminProvider>(
           builder: (context, value, child) {
             return Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
+              padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
               child: DropdownButtonFormField<String>(
+                decoration: InputDecoration.collapsed(hintText: '', floatingLabelBehavior: FloatingLabelBehavior.never),
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'This Field Required*';
+                  }
+                  return null;
+                },
                 dropdownColor: Colors.white,
-                hint: text('Choose',
+                hint: text('Select Section',
                     size: 16.0, fontfamily: 'SofiaPro', fontWeight: FontWeight.w400, color: Colors.black),
                 value: value.sectionName,
                 icon: const Icon(
@@ -163,9 +240,6 @@ class Helper {
                 iconSize: 24,
                 elevation: 16,
                 style: const TextStyle(color: Colors.black),
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                ),
                 onChanged: (String? newValue) {
                   var result = sectionsList.where((element) => element.sectionName == newValue);
                   String sectionId = result.first.sectionId.toString();
@@ -180,7 +254,7 @@ class Helper {
                     value: data.sectionName,
                     child: Text(
                       data.sectionName.toString(),
-                      style: TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                     ),
                   );
                 }).toList(),
@@ -200,6 +274,12 @@ class Helper {
             return Padding(
               padding: const EdgeInsets.only(left: 30, right: 30),
               child: DropdownButtonFormField<String>(
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'This Field Required*';
+                  }
+                  return null;
+                },
                 dropdownColor: Colors.white,
                 hint: text('Choose',
                     size: 16.0, fontfamily: 'SofiaPro', fontWeight: FontWeight.w400, color: Colors.black),
@@ -228,7 +308,7 @@ class Helper {
                     value: data.gender,
                     child: Text(
                       data.gender.toString(),
-                      style: TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                     ),
                   );
                 }).toList(),
@@ -246,8 +326,15 @@ class Helper {
         child: Consumer<CustomerAdminProvider>(
           builder: (context, value, child) {
             return Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
+              padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
               child: DropdownButtonFormField<String>(
+                decoration: InputDecoration.collapsed(hintText: '', floatingLabelBehavior: FloatingLabelBehavior.never),
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Required*';
+                  }
+                  return null;
+                },
                 dropdownColor: Colors.white,
                 hint: text('Select class',
                     size: 16.0, fontfamily: 'SofiaPro', fontWeight: FontWeight.w400, color: Colors.black),
@@ -259,9 +346,7 @@ class Helper {
                 iconSize: 24,
                 elevation: 16,
                 style: const TextStyle(color: Colors.black),
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                ),
+                
                 onChanged: (String? newValue) {
                   var result = classList.where((element) => element.className == newValue);
                   String classId = result.first.classId.toString();
@@ -276,7 +361,7 @@ class Helper {
                     value: data.className,
                     child: Text(
                       data.className.toString(),
-                      style: TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                     ),
                   );
                 }).toList(),

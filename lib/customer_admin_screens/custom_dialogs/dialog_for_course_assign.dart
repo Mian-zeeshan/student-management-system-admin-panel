@@ -3,10 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:student_tracking_portal/customer_admin_screens/customer_provider/subject_provider.dart';
 import 'package:student_tracking_portal/firebase/crud/Firebase_crud.dart';
 
-import '../core/app_config/app_config.dart';
-import '../customer_admin_screens/component/helper.dart';
-import '../provider/customer_admin_provider.dart';
-import 'common.dart';
+import '../../common/common.dart';
+import '../../core/app_config/app_config.dart';
+import '../../provider/customer_admin_provider.dart';
+import '../component/helper.dart';
+
+
 
 class SubjectAssignDialog extends StatelessWidget {
   final String title;
@@ -28,7 +30,7 @@ class SubjectAssignDialog extends StatelessWidget {
 
   Widget dialogContent(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
@@ -38,13 +40,13 @@ class SubjectAssignDialog extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
+            style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
           ),
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           Helper.customDropDownWidget(context, 'Select class *', Helper.classDropDown(context)),
-          SizedBox(height: 10.0),
+          const SizedBox(height: 10.0),
           Helper.customDropDownWidget(context, 'Select subject *', Helper.subjectDropDownList(context)),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           InkWell(
@@ -59,10 +61,10 @@ class SubjectAssignDialog extends StatelessWidget {
                   uniqueId).then((value) => Navigator.pop(context));
             },
             child: Container(
-              child: Center(child: text('Save', color: Colors.white, size: 20.0)),
               width: 100,
               height: 50,
               color: Colors.black,
+              child: Center(child: text('Save', color: Colors.white, size: 20.0)),
             ),
           ),
         ],
