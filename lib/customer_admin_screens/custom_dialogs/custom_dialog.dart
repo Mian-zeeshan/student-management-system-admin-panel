@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:student_tracking_portal/firebase/crud/Firebase_crud.dart';
 
-import '../core/app_config/app_config.dart';
-import '../customer_admin_screens/component/helper.dart';
-import 'common.dart';
+import '../../common/common.dart';
+import '../../core/app_config/app_config.dart';
+import '../component/helper.dart';
+
 
 class CustomDialog extends StatelessWidget {
   final String title;
   final String message;
 
-  CustomDialog({required this.title, required this.message});
+  CustomDialog({super.key, required this.title, required this.message});
   TextEditingController subjectController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class CustomDialog extends StatelessWidget {
 
   Widget dialogContent(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
@@ -35,11 +36,11 @@ class CustomDialog extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
+            style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
           ),
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           Helper.customTextFeildWithLabel('Name *', subjectController, 'Enter student name'),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           InkWell(
@@ -60,10 +61,10 @@ class CustomDialog extends StatelessWidget {
               }
             },
             child: Container(
-              child: Center(child: text('Save', color: Colors.white, size: 20.0)),
               width: 100,
               height: 50,
               color: Colors.black,
+              child: Center(child: text('Save', color: Colors.white, size: 20.0)),
             ),
           ),
         ],

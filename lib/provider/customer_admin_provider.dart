@@ -56,7 +56,7 @@ class CustomerAdminProvider with ChangeNotifier {
     notifyListeners();
   }
 
-   String? _UserUUId;
+  String? _UserUUId;
   String? get UserUUId => _UserUUId;
 
   void setUserUUId(value) {
@@ -65,4 +65,12 @@ class CustomerAdminProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  String? _userName;
+  String? get userName => _userName;
+
+  void setUserName(value) {
+    _userName = value;
+
+    notifyListeners();
+  }
 }

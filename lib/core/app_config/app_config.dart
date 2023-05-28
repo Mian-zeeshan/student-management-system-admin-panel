@@ -13,6 +13,7 @@ import '../../customer_admin_screens/subject/add_subject.dart';
 import '../../customer_admin_screens/subject/assign_subject.dart';
 import '../../customer_admin_screens/teachers/add_teacher.dart';
 import '../../customer_admin_screens/teachers/all_teacher.dart';
+import '../../customer_admin_screens/teachers/assign_subject_to_teacher.dart';
 import '../../dashboard/dashboard_screen.dart';
 import '../../provider/user_provider.dart';
 import '../../provider/role_provider.dart';
@@ -31,6 +32,7 @@ class AppConfig {
     const AllTeacher(),
     const AddSubject(),
     const AssignSubject(),
+    const AssignSubjectToTeacher()
   ];
 
   static addDataComponent(String collectionName, String docId, Map<String, Object> map, context) {

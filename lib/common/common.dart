@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 String generateUniqueID() {
-  var uuid = Uuid();
+  var uuid = const Uuid();
   return uuid.v4();
 }
 
@@ -12,11 +11,11 @@ void showAlertDialog(BuildContext context, String message) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Alert Message'),
+        title: const Text('Alert Message'),
         content: Text(message),
         actions: <Widget>[
           TextButton(
-            child: Text('OK'),
+            child: const Text('OK'),
             onPressed: () {
               Navigator.of(context).pop(); // Close the dialog
             },

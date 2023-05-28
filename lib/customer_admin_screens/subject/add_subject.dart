@@ -2,12 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../common/custom_dialog.dart';
+
 import '../../core/app_config/app_config.dart';
 import '../../core/models/parent_model/parent_model.dart';
 import '../../core/models/student_model/student_model.dart';
 import '../component/header.dart';
 import '../component/helper.dart';
+import '../custom_dialogs/custom_dialog.dart';
 
 class AddSubject extends StatefulWidget {
   const AddSubject({super.key});
@@ -85,15 +86,15 @@ class _AddSubjectState extends State<AddSubject> {
                               color: const Color(0xFFF2F1F1),
                               child: Center(
                                 child: Padding(
-                                  padding: EdgeInsets.only(left: 18),
+                                  padding: const EdgeInsets.only(left: 18),
                                   child: TextField(
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     onChanged: (value) {
                                       setState(() {
                                         _searchQuery = value;
                                       });
                                     },
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Color(0xff757576)),
                                         hintText: 'Search by name...'),
@@ -116,16 +117,16 @@ class _AddSubjectState extends State<AddSubject> {
                                 _showCustomDialog(context);
                               },
                               child: Container(
-                                child: Center(child: text('Add New Subject', color: Colors.white, size: 20.0)),
                                 width: 200,
                                 height: 50,
                                 color: Colors.black,
+                                child: Center(child: text('Add New Subject', color: Colors.white, size: 20.0)),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Card(
@@ -236,11 +237,11 @@ class _AddSubjectState extends State<AddSubject> {
                                                           ],
                                                         ),
                                                       ),
-                                                      Expanded(
+                                                      const Expanded(
                                                         child: Text(
                                                           '',
                                                           //snapshot.data!.docs[index]['email'].toString(),
-                                                          style: const TextStyle(
+                                                          style: TextStyle(
                                                               fontSize: 18,
                                                               fontWeight: FontWeight.w400,
                                                               color: Color(0xff656262),
@@ -248,28 +249,11 @@ class _AddSubjectState extends State<AddSubject> {
                                                         ),
                                                       ),
                                                       Expanded(child: Container()
-                                                          //  Text(
-                                                          //   snapshot.data!.docs[index]['genderId'].toString() ==
-                                                          //           'bbcbxcmnnnn12'
-                                                          //       ? 'Male'
-                                                          //       : 'Female',
-                                                          //   style: const TextStyle(
-                                                          //       fontSize: 18,
-                                                          //       fontWeight: FontWeight.w400,
-                                                          //       color: Color(0xff656262),
-                                                          //       fontFamily: 'SofiaPro'),
-                                                          // ),
+                                                         
                                                           ),
                                                       Expanded(child: Container()
 
-                                                          // Text(
-                                                          //   snapshot.data!.docs[index]['cnicNo'].toString(),
-                                                          //   style: const TextStyle(
-                                                          //       fontSize: 18,
-                                                          //       fontWeight: FontWeight.w400,
-                                                          //       color: Color(0xff656262),
-                                                          //       fontFamily: 'SofiaPro'),
-                                                          // ),
+                                                       
                                                           ),
                                                     ],
                                                   ),

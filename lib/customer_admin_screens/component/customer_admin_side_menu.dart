@@ -129,7 +129,7 @@ class CustomerAdminSideMenue extends StatelessWidget {
               ),
               leading: Image.asset("asset/images/account.png"), //add icon
               childrenPadding: const EdgeInsets.only(left: 0), //children padding
-              children: [
+              children: const [
                 //more child menu
               ],
             ),

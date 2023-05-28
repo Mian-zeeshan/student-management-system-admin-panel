@@ -96,12 +96,12 @@ class _AllParentState extends State<AllParent> {
                           ),
                           const Spacer(),
                           Container(
-                            child: Center(
-                              child: text('SEARCH', size: 20, color: Colors.white),
-                            ),
                             height: 54.0,
                             width: 202,
                             color: const Color(0xFFD60A0B),
+                            child: Center(
+                              child: text('SEARCH', size: 20, color: Colors.white),
+                            ),
                           )
                         ],
                       ),
@@ -257,7 +257,7 @@ class _AllParentState extends State<AllParent> {
                                                   child: Text(
                                                     
                                                      snapshot.data!.docs[index]['phnNo'].toString(),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 18,
                                                         fontWeight: FontWeight.w400,
                                                         color: Color(0xff656262),
