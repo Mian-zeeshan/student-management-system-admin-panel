@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../core/constants/color_constants.dart';
 import '../../dashboard/components/header.dart';
-import '../../dashboard/components/mini_information_card.dart';
 import '../../dashboard/components/recent_forums.dart';
 import '../../dashboard/components/user_details_widget.dart';
 import '../../responsive.dart';

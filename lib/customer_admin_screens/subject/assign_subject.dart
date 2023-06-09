@@ -26,9 +26,6 @@ class _AssignSubjectState extends State<AssignSubject> {
   List<StudentModel> studentModelList = [];
   List<ParentModel> parentModelList = [];
   TextEditingController subjectController = TextEditingController();
-  String _searchQuery = '';
-  @override
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -110,7 +107,6 @@ class _AssignSubjectState extends State<AssignSubject> {
                                     style: const TextStyle(color: Colors.black),
                                     onChanged: (value) {
                                       setState(() {
-                                        _searchQuery = value;
                                       });
                                     },
                                     decoration: const InputDecoration(

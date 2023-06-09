@@ -7,6 +7,10 @@ class StudentModel {
   String? classSection;
   String? email;
   String? password;
+  String? fatherName;
+  String? phoneNo;
+  String dateOfBirth;
+  String? address;
   String? CNIC;
   String? fatherCNIC;
   String? createdAt;
@@ -21,6 +25,10 @@ class StudentModel {
     required this.classSection,
     required this.email,
     required this.password,
+    required this.fatherName,
+    required this.phoneNo,
+    required this.dateOfBirth,
+    required this.address,
     required this.CNIC,
     required this.fatherCNIC,
     required this.createdAt,
@@ -37,6 +45,10 @@ class StudentModel {
       classSection: json['classSection'],
       email: json['email'],
       password: json['password'],
+      fatherName: json['fatherName'],
+      phoneNo: json['phoneNo'],
+      dateOfBirth: json['dateOfBirth'],
+      address: json['address'],
       CNIC: json['CNIC'],
       fatherCNIC: json['fatherCNIC'],
       createdAt: json['createdAt'],
@@ -54,6 +66,10 @@ class StudentModel {
       'classSection': classSection,
       'email': email,
       'password': password,
+      'fatherName': fatherName,
+      'phoneNo': phoneNo,
+      'dateOfBirth': dateOfBirth,
+      'address': address,
       'CNIC': CNIC,
       'fatherCNIC': fatherCNIC,
       'createdAt': createdAt,

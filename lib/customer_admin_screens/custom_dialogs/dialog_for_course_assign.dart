@@ -15,7 +15,7 @@ class SubjectAssignDialog extends StatelessWidget {
   final String message;
 
   SubjectAssignDialog({required this.title, required this.message});
-  TextEditingController subjectController = TextEditingController();
+  final TextEditingController subjectController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Dialog(

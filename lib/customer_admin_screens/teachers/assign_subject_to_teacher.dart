@@ -26,9 +26,6 @@ class _AssignSubjectToTeacherState extends State<AssignSubjectToTeacher> {
   List<StudentModel> studentModelList = [];
   List<ParentModel> parentModelList = [];
   TextEditingController subjectController = TextEditingController();
-  String _searchQuery = '';
-  @override
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -110,7 +107,6 @@ class _AssignSubjectToTeacherState extends State<AssignSubjectToTeacher> {
                                     style: const TextStyle(color: Colors.black),
                                     onChanged: (value) {
                                       setState(() {
-                                        _searchQuery = value;
                                       });
                                     },
                                     decoration: const InputDecoration(
@@ -146,16 +142,16 @@ class _AssignSubjectToTeacherState extends State<AssignSubjectToTeacher> {
                         color: const Color(0xFFDDDEEE),
                         child: Column(
                           children: [
-                            Card(
+                            const Card(
                               color: Colors.white,
                               child: SizedBox(
                                 height: 71,
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(left: 38, top: 0),
+                                    padding: EdgeInsets.only(left: 38, top: 0),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: const [
+                                      children: [
                                         Expanded(
                                           child: Text('Subject Name',
                                               style: TextStyle(

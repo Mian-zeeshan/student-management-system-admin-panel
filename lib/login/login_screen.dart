@@ -10,7 +10,6 @@ import '../core/constants/color_constants.dart';
 import '../core/widgets/app_button_widget.dart';
 import '../core/widgets/input_widget.dart';
 import '../customer_admin_screens/home_screen/customer_admin_home.dart';
-import '../provider/page_index_provider.dart';
 import '../home_screen.dart';
 import '../product_admin_screens/providers/customer_provider.dart';
 import 'components/slider_widget.dart';
@@ -427,7 +426,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                 MaterialPageRoute(builder: (context) => CustomerAdminHomeScreen()),
               );
             } else if (role == 'branch_admin') {
-              String branchId = data['branchid'];
 
               loginProvider.setLoginUserRole('Branch Admin');
 

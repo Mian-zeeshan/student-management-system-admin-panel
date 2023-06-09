@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:student_tracking_portal/core/models/gender_model/gender_model.dart';
 import 'package:student_tracking_portal/core/models/section_model/section_model.dart';
 import 'package:student_tracking_portal/customer_admin_screens/customer_provider/subject_provider.dart';
-import 'package:student_tracking_portal/customer_admin_screens/home_screen/customer_admin_home.dart';
 
 import '../../core/app_config/app_config.dart';
 import '../../core/models/class_model/class_model.dart';
@@ -85,7 +84,7 @@ class Helper {
                 padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
                 child: DropdownButtonFormField<String>(
                   decoration:
-                      InputDecoration.collapsed(hintText: '', floatingLabelBehavior: FloatingLabelBehavior.never),
+                      const InputDecoration.collapsed(hintText: '', floatingLabelBehavior: FloatingLabelBehavior.never),
                   dropdownColor: Colors.white,
                   isDense: true,
                   hint: text('Select Teacher',
@@ -152,7 +151,7 @@ class Helper {
                 child: Container(
                   child: DropdownButtonFormField<String>(
                     decoration:
-                        InputDecoration.collapsed(hintText: '', floatingLabelBehavior: FloatingLabelBehavior.never),
+                        const InputDecoration.collapsed(hintText: '', floatingLabelBehavior: FloatingLabelBehavior.never),
                     dropdownColor: Colors.white,
                     isDense: true,
                     hint: text('Select subject',
@@ -222,7 +221,7 @@ class Helper {
             return Padding(
               padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
               child: DropdownButtonFormField<String>(
-                decoration: InputDecoration.collapsed(hintText: '', floatingLabelBehavior: FloatingLabelBehavior.never),
+                decoration: const InputDecoration.collapsed(hintText: '', floatingLabelBehavior: FloatingLabelBehavior.never),
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
                     return 'This Field Required*';
@@ -328,7 +327,7 @@ class Helper {
             return Padding(
               padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
               child: DropdownButtonFormField<String>(
-                decoration: InputDecoration.collapsed(hintText: '', floatingLabelBehavior: FloatingLabelBehavior.never),
+                decoration: const InputDecoration.collapsed(hintText: '', floatingLabelBehavior: FloatingLabelBehavior.never),
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
                     return 'Required*';

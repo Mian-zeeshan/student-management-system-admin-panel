@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:student_tracking_portal/provider/page_index_provider.dart';
-
-import '../../../../core/constants/color_constants.dart';
 
 class CustomerAdminSideMenue extends StatelessWidget {
   const CustomerAdminSideMenue({
@@ -33,7 +30,9 @@ class CustomerAdminSideMenue extends StatelessWidget {
             DrawerListTile(
               title: "Dashboard",
               svgSrc: "asset/images/av_timer.png",
-              press: () {},
+              press: () {
+                pageIndexProvider.setPageIndex(0);
+              },
             ),
             const Divider(
               thickness: 2,
@@ -78,10 +77,17 @@ class CustomerAdminSideMenue extends StatelessWidget {
               childrenPadding: const EdgeInsets.only(left: 0), //children padding
               children: [
                 DrawerListTile(
-                  title: "All Parents",
+                  title: "Add Parents",
                   svgSrc: "",
                   press: () {
                     pageIndexProvider.setPageIndex(3);
+                  },
+                ),
+                DrawerListTile(
+                  title: "All Parents",
+                  svgSrc: "",
+                  press: () {
+                    pageIndexProvider.setPageIndex(4);
                   },
                 ),
 
@@ -104,32 +110,17 @@ class CustomerAdminSideMenue extends StatelessWidget {
                   title: "Add Teacher",
                   svgSrc: "",
                   press: () {
-                    pageIndexProvider.setPageIndex(4);
+                    pageIndexProvider.setPageIndex(5);
                   },
                 ),
                 DrawerListTile(
                   title: "All Teacher",
                   svgSrc: "",
                   press: () {
-                    pageIndexProvider.setPageIndex(5);
+                    pageIndexProvider.setPageIndex(6);
                   },
                 ),
 
-                //more child menu
-              ],
-            ),
-            const Divider(
-              thickness: 2,
-              color: Color(0xff131F73),
-            ),
-            ExpansionTile(
-              title: const Text(
-                "Accounts",
-                style: TextStyle(color: Color(0xffFFFFFF), fontSize: 18, fontFamily: 'Montserrat'),
-              ),
-              leading: Image.asset("asset/images/account.png"), //add icon
-              childrenPadding: const EdgeInsets.only(left: 0), //children padding
-              children: const [
                 //more child menu
               ],
             ),
@@ -149,17 +140,39 @@ class CustomerAdminSideMenue extends StatelessWidget {
                   title: "Add Subject",
                   svgSrc: "",
                   press: () {
-                    pageIndexProvider.setPageIndex(4);
+                    pageIndexProvider.setPageIndex(7);
                   },
                 ),
                 DrawerListTile(
-                  title: "All Subject",
+                  title: "Assign subjects to class",
                   svgSrc: "",
                   press: () {
-                    pageIndexProvider.setPageIndex(5);
+                    pageIndexProvider.setPageIndex(8);
+                  },
+                ),
+                DrawerListTile(
+                  title: "Assign subjects to teacher",
+                  svgSrc: "",
+                  press: () {
+                    pageIndexProvider.setPageIndex(9);
                   },
                 ),
 
+                //more child menu
+              ],
+            ),
+            const Divider(
+              thickness: 2,
+              color: Color(0xff131F73),
+            ),
+            ExpansionTile(
+              title: const Text(
+                "Accounts",
+                style: TextStyle(color: Color(0xffFFFFFF), fontSize: 18, fontFamily: 'Montserrat'),
+              ),
+              leading: Image.asset("asset/images/account.png"), //add icon
+              childrenPadding: const EdgeInsets.only(left: 0), //children padding
+              children: const [
                 //more child menu
               ],
             ),
@@ -189,7 +202,7 @@ class DrawerListTile extends StatelessWidget {
   }) : super(key: key);
 
   final String title;
-  String svgSrc;
+  final String svgSrc;
   final VoidCallback press;
 
   @override

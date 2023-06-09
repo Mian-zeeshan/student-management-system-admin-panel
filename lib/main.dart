@@ -13,10 +13,8 @@ import 'customer_admin_screens/home_screen/customer_admin_home.dart';
 import 'provider/user_provider.dart';
 import 'provider/page_index_provider.dart';
 import 'provider/role_provider.dart';
-import 'home_screen.dart';
 import 'package:provider/provider.dart';
 
-import 'login/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
