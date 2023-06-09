@@ -1,17 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:student_tracking_portal/provider/customer_admin_provider.dart';
-import 'package:uuid/uuid.dart';
 
-import 'package:intl/intl.dart';
 
 import '../../core/app_config/app_config.dart';
-import '../../core/constants/color_constants.dart';
 import '../../core/models/parent_model/parent_model.dart';
 import '../../core/models/student_model/student_model.dart';
-import '../../firebase/crud/Firebase_crud.dart';
 import '../component/header.dart';
 import '../component/helper.dart';
 
@@ -29,10 +23,10 @@ class _AllStudentState extends State<AllStudent> {
 
   List<StudentModel> studentModelList = [];
   List<ParentModel> parentModelList = [];
-  @override
 
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+ 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -195,7 +189,8 @@ class _AllStudentState extends State<AllStudent> {
                             child: SizedBox(
                                 // height:widget.size.height * 0.3,
 
-                                child: StreamBuilder<QuerySnapshot>(
+                                child:
+                                 StreamBuilder<QuerySnapshot>(
                               stream: FirebaseFirestore.instance
                                   .collection('Student')
                                   // .where('userRole', isEqualTo: 'admin')
@@ -304,7 +299,10 @@ class _AllStudentState extends State<AllStudent> {
                                   );
                                 }
                               },
-                            )),
+                            )
+                            
+                            ),
+                         
                           ),
                         ],
                       ),

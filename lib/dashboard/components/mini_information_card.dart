@@ -61,9 +61,9 @@ InformationCard(image: 'asset/images/earning.png',titleName: 'Earning',subTitleN
 }
 
 class InformationCard extends StatelessWidget {
-String image;
-String titleName;
-String subTitleName;
+final String image;
+final String titleName;
+final String subTitleName;
 
    InformationCard({super.key,required this.image,required this.titleName,required this.subTitleName});
 
