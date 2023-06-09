@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../core/constants/color_constants.dart';
-import '../../models/daily_info_model.dart';
 import '../../responsive.dart';
 import 'forms/input_form.dart';
-import 'mini_information_widget.dart';
 
 class MiniInformation extends StatelessWidget {
   const MiniInformation({
@@ -13,7 +11,6 @@ class MiniInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size _size = MediaQuery.of(context).size;
     return Column(
       children: [
         Row(

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../core/app_config/app_config.dart';
 import '../../core/models/parent_model/parent_model.dart';
 import '../../core/models/student_model/student_model.dart';
-import '../component/helper.dart';
 
 class AllTeacher extends StatefulWidget {
   const AllTeacher({super.key});
@@ -19,8 +18,6 @@ class AllTeacher extends StatefulWidget {
 class _AllTeacherState extends State<AllTeacher> {
   List<StudentModel> studentModelList = [];
   List<ParentModel> parentModelList = [];
-  @override
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:student_tracking_portal/dashboard/components/user_details_mini_card.dart';
 
 import '../../core/constants/color_constants.dart';
-import 'calendart_widget.dart';
 import 'charts.dart';
 
 class UserDetailsWidget extends StatelessWidget {
@@ -14,12 +13,12 @@ class UserDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(defaultPadding),
+      decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           

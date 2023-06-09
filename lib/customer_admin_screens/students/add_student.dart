@@ -1,15 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:student_tracking_portal/provider/customer_admin_provider.dart';
-import 'package:uuid/uuid.dart';
 
 import 'package:intl/intl.dart';
 
 import '../../common/common.dart';
 import '../../core/app_config/app_config.dart';
-import '../../core/constants/color_constants.dart';
 import '../../core/models/parent_model/parent_model.dart';
 import '../../core/models/student_model/student_model.dart';
 import '../../firebase/crud/Firebase_crud.dart';
@@ -195,6 +192,10 @@ class _AddStudentState extends State<AddStudent> {
 
     List<StudentModel> studentList = [];
     studentList.add(StudentModel(
+        address: '',
+        dateOfBirth: '',
+        fatherName: '',
+        phoneNo: '',
         studentId: studentId,
         name: stdNameController.text.toString().toLowerCase(),
         rollNo: stdRollController.text.toLowerCase().toString(),

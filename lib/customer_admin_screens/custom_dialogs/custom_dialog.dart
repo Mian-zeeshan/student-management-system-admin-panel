@@ -11,7 +11,7 @@ class CustomDialog extends StatelessWidget {
   final String message;
 
   CustomDialog({super.key, required this.title, required this.message});
-  TextEditingController subjectController = TextEditingController();
+ final TextEditingController subjectController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Dialog(

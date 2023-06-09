@@ -25,8 +25,6 @@ class _AddSubjectState extends State<AddSubject> {
   TextEditingController subjectController = TextEditingController();
   String _searchQuery = '';
   @override
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 

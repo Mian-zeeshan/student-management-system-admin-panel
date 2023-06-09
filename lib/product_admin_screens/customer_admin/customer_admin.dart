@@ -11,7 +11,6 @@ import '../../core/app_config/app_config.dart';
 import '../../core/constants/color_constants.dart';
 import '../../provider/user_provider.dart';
 import '../../provider/role_provider.dart';
-import '../providers/customer_provider.dart';
 
 class CustomerAdminScreen extends StatefulWidget {
   @override
@@ -475,7 +474,6 @@ class _CustomerAdminScreenState extends State<CustomerAdminScreen> {
   Future _signUp(var uuid, String nowDate) async {
     var roleProvider = Provider.of<RoleProvider>(context, listen: false);
     var userProvider = Provider.of<AddUserProvider>(context, listen: false);
-    var customerProvider = Provider.of<CustomerProvider>(context, listen: false);
     try {
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: userEmailController.text.toString(), password: userPasswordController.text.toString());

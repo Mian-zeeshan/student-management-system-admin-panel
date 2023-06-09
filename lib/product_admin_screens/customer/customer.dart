@@ -95,11 +95,11 @@ class _CustomerScreenState extends State<CustomerScreen> {
                       ),
                     ),
                     
-                    Padding(
-                      padding: const EdgeInsets.only(left: 38, top: 20),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 38, top: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           Expanded(
                             child: Text('Customer',
                                 style: TextStyle(
@@ -217,7 +217,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                             Image.asset(
                                               "asset/images/delete.png",
                                             ),
-                                            SizedBox(width: 27.0,),
+                                            const SizedBox(width: 27.0,),
                                             Image.asset(
                                               "asset/images/edit.png",
                                             )
@@ -251,7 +251,6 @@ class _CustomerScreenState extends State<CustomerScreen> {
       context: context,
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
-        var size = MediaQuery.of(context).size;
         return SizedBox(
           width: 400,
           child: AlertDialog(

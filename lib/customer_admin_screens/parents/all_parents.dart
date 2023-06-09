@@ -21,7 +21,7 @@ class _AllParentState extends State<AllParent> {
   List<StudentModel> studentModelList = [];
   List<ParentModel> parentModelList = [];
   @override
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
